@@ -1,0 +1,129 @@
+// =============================================================================
+//
+// Waybar configuration
+//
+// Configuration reference: https://github.com/Alexays/Waybar/wiki/Configuration
+//
+// =============================================================================
+
+{
+    "layer": "top",
+
+    "height": 30,
+
+    "modules-left": [
+        "sway/workspaces"
+    ],
+    "modules-center": [
+        "sway/window"
+    ],
+    "modules-right": [
+       	"sway/language",
+        "network",
+        "bluetooth",
+        "pulseaudio",
+        "backlight",
+        "battery",
+        "clock",
+        "custom/power"
+    ],
+
+    // -------------------------------------------------------------------------
+    // Modules
+    // -------------------------------------------------------------------------
+    
+    "sway/workspaces": {
+        "all-outputs": false,
+        "disable-scroll": true,
+        "format": "{name}"
+    },
+    
+    "sway/window": {
+        "format": "{}",
+        "max-length": 120
+    },
+    
+	"sway/language": {
+		"format": "{flag} {}",
+	},
+    
+ 	"network": {
+        "interval": 30,
+        "format-wifi": "", // Icon: wifi
+        "format-ethernet": " {ifname}", // Icon: ethernet
+        "format-disconnected": "⚠ Disconnected",
+        "tooltip-format": "{ifname}: {ipaddr}",
+        "on-click": "swaymsg exec \\$term_float_portrait nmtui"
+    },
+       
+    "bluetooth": {
+        "format": "",
+        "format-disabled": "",
+        "interval": 30,
+        "on-click": "blueman-manager",
+        "on-click-right": "rfkill toggle bluetooth",
+        "tooltip-format": "{}"
+    },
+    
+	"pulseaudio": {
+        "scroll-step": 1,
+        "format": "{icon} {volume}%   {format_source}",
+        "format-bluetooth": "{icon} {volume}%",
+        "format-muted": "",
+        "format-icons": {
+            "headphones": "",
+            "handsfree": "",
+            "headset": "",
+            "phone": "",
+            "portable": "",
+            "car": "",
+            "default": ["", ""]
+        },
+        "on-click": "swaymsg exec \\$pulseaudio"
+    },
+
+    "backlight": {
+        "device": "intel_backlight",
+        "format": "{icon} {percent}%",
+        "format-icons": ["", ""],
+        "on-scroll-down": "light -A 1",
+        "on-scroll-up": "light -U 1"
+    },
+
+    "battery": {
+        "interval": 60,
+        "states": {
+            "warning": 30,
+            "critical": 15
+        },
+        "format-charging": " {icon} {capacity}%", // Icon: bolt
+        "format": "{icon} {capacity}%",
+        "format-icons": [
+            "", // Icon: battery-empty
+            "", // Icon: battery-quarter
+            "", // Icon: battery-half
+            "", // Icon: battery-three-quarters
+            ""  // Icon: battery-full
+        ],
+        "tooltip": true
+    },
+
+    "clock": {
+        "interval": 60,
+        "format": "{:%a, %e %b %H:%M}",
+        "tooltip": true,
+        "tooltip-format": "<big>{:%B %Y}</big>\n<tt>{calendar}</tt>",
+        "on-click": "swaymsg exec \\$calendar"
+    },
+	"session": {
+		// "device": "acpi_video1",
+		"format": "{}",
+		 "on-click": "swaymsg exec \\$wlogout -b 5"
+	},
+	"custom/power": {
+		"format": "", // This icon is provided by the Awesome-fonts collection, not sure how to paste it unfortunately
+		"tooltip": false,
+		"on-click": "swaynag -t poweroff -m 'Power Menu Options' -b 'Shutdown' 'shutdown -h now' -b 'Restart' 'shutdown -r now' -b 'Logout' 'swaymsg exit'"
+	},
+
+}
